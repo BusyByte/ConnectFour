@@ -8,8 +8,9 @@ object StateTransition {
   object Implicits {
     implicit def initialStateTransition = new StateTransition[InitialState] {
       override def transition(input: String, current: InitialState) = input match {
-        case Confirmed(_) => EnterPlayerOneState(current.playField)
-        case _ => ExitGameState //TODO: need to check for no and not just default to this
+        case Answer(YesAnswer) => EnterPlayerOneState(current.playField)
+        case Answer(NoAnswer) => ExitGameState
+        case _ => current
       }
     }
 
@@ -38,7 +39,7 @@ object StateTransition {
           }
           else {
             val updatedPlayField = PlayField.selectCell(current.playField, columnNumber, current.turn)
-            if(PlayField.isFourConnected(updatedPlayField)) {
+            if(PlayField.isFourConnected(updatedPlayField, columnNumber)) {
               GameOverState(updatedPlayField, current.player1, current.player2, current.turn)
             } else {
               val nextTurn = {
@@ -60,24 +61,34 @@ object StateTransition {
 
 
     implicit def gameOverStateTransition = new StateTransition[GameOverState] {
-      override def transition(input: String, current: GameOverState) = ??? // TODO: implement like initial
+      override def transition(input: String, current: GameOverState) = input match {
+          case Answer(YesAnswer) => EnterPlayerOneState(PlayField.empty)
+          case Answer(NoAnswer) => ExitGameState
+          case _ => current
+        }
     }
 
   }
 }
 
-
+class NonEmptyString(val value: String) extends AnyVal
 
 object NonEmptyString {
-  def unapply(input: String): Option[String] = input.trim match {
-    case s if s.nonEmpty => Some(s) //TODO: should return Type
+  def unapply(input: String): Option[NonEmptyString] = input.trim match {
+    case s if s.nonEmpty => Some(new NonEmptyString(s))
     case _ => None
   }
 }
 
-object Confirmed {
-  def unapply(input: String): Option[String] = input.toLowerCase.trim.toCharArray.toList match {
-    case 'y' :: _ => Some(input)
+sealed trait Answer
+case object YesAnswer extends Answer
+case object NoAnswer extends Answer
+
+
+object Answer {
+  def unapply(input: String): Option[Answer] = input.toLowerCase.trim.toCharArray.toList match {
+    case 'y' :: _ => Some(YesAnswer)
+    case 'n' :: _ => Some(NoAnswer)
     case _ => None
   }
 }

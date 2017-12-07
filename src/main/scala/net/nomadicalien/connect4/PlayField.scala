@@ -11,8 +11,6 @@ object PlayField {
 
   lazy val empty:PlayField = Vector.fill(numColumns, numRows)(EmptyCell)
 
-
-
   def isColumnFull(playField: PlayField, column: ColumnNumber): Boolean = playField(column.number).forall {
     case EmptyCell => false
     case SelectedCell(_) => true
@@ -22,7 +20,7 @@ object PlayField {
     ??? // TODO: implement
 
 
-  def isFourConnected(playField: PlayField): Boolean =
+  def isFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber): Boolean =
     ??? // TODO: implement
 }
 

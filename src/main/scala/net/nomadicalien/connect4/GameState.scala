@@ -14,22 +14,24 @@ case class EnterPlayerOneState(
 
 case class EnterPlayerTwoState(
                          playField: PlayField,
-                         player1: Player
+                         player1: Player1
                        ) extends GameState
 
 case class InPlayState(
                          playField: PlayField,
-                         player1: Player,
-                         player2: Player,
+                         player1: Player1,
+                         player2: Player2,
                          turn: Player
                        ) extends GameState
 
 case class GameOverState(
-                           playField: PlayField,
-                           player1: Player,
-                           player2: Player,
-                           winner: Player
-                         ) extends GameState
+                         playField: PlayField,
+                         player1: Player1,
+                         player2: Player2,
+                         winner: Player
+                       ) extends GameState
+
+case object ExitGameState extends GameState
 
 
 object GameState {

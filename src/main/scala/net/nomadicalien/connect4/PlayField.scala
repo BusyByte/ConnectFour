@@ -16,8 +16,16 @@ object PlayField {
     case SelectedCell(_) => true
   }
 
-  def selectCell(playField: PlayField, columnNumber: ColumnNumber, player: Player): PlayField =
-    ??? // TODO: implement
+  //TODO: should be able to pass in non-full column using method above
+  def selectCell(playField: PlayField, columnNumber: ColumnNumber, player: Player): PlayField = {
+    val currentColunn = playField(columnNumber.number)
+    val indexToUpdate: Option[Int] = currentColunn.zipWithIndex.collectFirst {
+      case (EmptyCell, index) => index
+    }
+    indexToUpdate.fold(playField) { index =>
+      playField.updated(columnNumber.number, currentColunn.updated(index, SelectedCell(player.color)))
+    }
+  }
 
 
   def isVerticalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
@@ -35,14 +43,14 @@ object PlayField {
     ??? // TODO: implement
   }
 
-  def isDiagnonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+  def isDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     ??? // TODO: implement
   }
 
   def isFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     isVerticalFourConnected(playField, lastPlayedColumn, player) ||
     isHorizontalFourConnected(playField, lastPlayedColumn, player) ||
-    isDiagnonalFourConnected(playField, lastPlayedColumn, player)
+    isDiagonalFourConnected(playField, lastPlayedColumn, player)
   }
 
 }
@@ -51,7 +59,7 @@ class ColumnNumber(val number: Int) extends AnyVal
 
 object ColumnNumber {
   def unapply(input: String): Option[ColumnNumber] = input.trim.toCharArray.toList match {
-    case d :: _  if d.isDigit => Some(new ColumnNumber(d.toInt))
+    case d :: _  if d.isDigit && d.toInt >=0 && d.toInt < PlayField.numColumns => Some(new ColumnNumber(d.toInt))
     case _ => None
   }
 }

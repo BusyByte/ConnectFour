@@ -20,8 +20,31 @@ object PlayField {
     ??? // TODO: implement
 
 
-  def isFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber): Boolean =
+  def isVerticalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+    val playersColumnSelected = playField(lastPlayedColumn.number).filterNot {
+      case EmptyCell => true
+      case _ => false
+    }.reverse.takeWhile {
+      case SelectedCell(color) if color == player.color  => true
+      case _ => false
+    }.take(4)
+    playersColumnSelected.length == 4
+  }
+
+  def isHorizontalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     ??? // TODO: implement
+  }
+
+  def isDiagnonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+    ??? // TODO: implement
+  }
+
+  def isFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+    isVerticalFourConnected(playField, lastPlayedColumn, player) ||
+    isHorizontalFourConnected(playField, lastPlayedColumn, player) ||
+    isDiagnonalFourConnected(playField, lastPlayedColumn, player)
+  }
+
 }
 
 class ColumnNumber(val number: Int) extends AnyVal

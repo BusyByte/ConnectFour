@@ -39,7 +39,7 @@ object StateTransition {
           }
           else {
             val updatedPlayField = PlayField.selectCell(current.playField, columnNumber, current.turn)
-            if(PlayField.isFourConnected(updatedPlayField, columnNumber)) {
+            if(PlayField.isFourConnected(updatedPlayField, columnNumber, current.turn)) {
               GameOverState(updatedPlayField, current.player1, current.player2, current.turn)
             } else {
               val nextTurn = {

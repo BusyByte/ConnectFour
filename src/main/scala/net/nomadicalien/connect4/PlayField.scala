@@ -44,6 +44,22 @@ object PlayField {
   }
 
   def isDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+    isUpHillDiagonalFourConnected(playField, lastPlayedColumn, player) ||
+    isDownHillDiagonalFourConnected(playField, lastPlayedColumn, player)
+  }
+
+  /**
+    * Connected like /
+    */
+  def isUpHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
+    ??? // TODO: implement
+  }
+
+  /**
+    * Connected like \
+    *
+    */
+  def isDownHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     ??? // TODO: implement
   }
 

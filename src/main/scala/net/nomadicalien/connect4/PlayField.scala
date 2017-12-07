@@ -18,12 +18,12 @@ object PlayField {
 
   //TODO: should be able to pass in non-full column using method above
   def selectCell(playField: PlayField, columnNumber: ColumnNumber, player: Player): PlayField = {
-    val currentColunn = playField(columnNumber.number)
-    val indexToUpdate: Option[Int] = currentColunn.zipWithIndex.collectFirst {
+    val currentColumn = playField(columnNumber.number)
+    val indexToUpdate: Option[Int] = currentColumn.zipWithIndex.collectFirst {
       case (EmptyCell, index) => index
     }
     indexToUpdate.fold(playField) { index =>
-      playField.updated(columnNumber.number, currentColunn.updated(index, SelectedCell(player.color)))
+      playField.updated(columnNumber.number, currentColumn.updated(index, SelectedCell(player.color)))
     }
   }
 

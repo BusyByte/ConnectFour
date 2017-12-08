@@ -4,7 +4,6 @@ import org.specs2.mutable.Specification
 import org.specs2.specification.Scope
 
 /*
-
 Given a prompt to enter player 2’s name
 
 When a player enters a name
@@ -13,9 +12,6 @@ Then the players see a playfield that is a grid with 6 rows and 7 columns
 And player 1 is assigned to the red color
 And player 2 is assigned to the black color
 And player 1 is in control of the playfield
-
-
-
 */
 class BeginGameSpec extends Specification {
   "EnterPlayerTwoState" should {
@@ -47,13 +43,8 @@ class BeginGameSpec extends Specification {
     }
   }
 
-  trait context extends Scope {
+  trait context extends Scope with TestData {
     import StateTransition.Implicits._
-    lazy val playField = PlayField.empty
-    lazy val player1 = Player1(new NonEmptyString("player1"))
-    lazy val state = EnterPlayerTwoState(playField, player1)
-    lazy val player2Name = "player2"
-    lazy val player2 = Player2(new NonEmptyString(player2Name))
-    lazy val newState = implicitly[StateTransition[EnterPlayerTwoState]].transition(player2Name, state)
+    lazy val newState = implicitly[StateTransition[EnterPlayerTwoState]].transition(player2Name, enterPlayerTwoState)
   }
 }

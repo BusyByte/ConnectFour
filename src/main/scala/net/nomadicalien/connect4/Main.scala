@@ -15,7 +15,7 @@ class Main extends App {
     val updatedState = implicitly[StateTransition[GameState]].transition(input, gameState)
     updatedState match {
       case ExitGameState => ()
-      case _ => gameLoop(gameState)
+      case _ => gameLoop(updatedState)
     }
 
   }

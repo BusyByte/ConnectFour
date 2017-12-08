@@ -20,10 +20,6 @@ And player 1 is in control of the playfield
 class BeginGameSpec extends Specification {
   "EnterPlayerTwoState" should {
 
-    "transition states" in new context {
-      newState must_=== expectedState
-    }
-
     "playfield has correct number of rows and columns" in new context {
       newState must beLike {
         case InPlayState(playField, _, _, _) =>
@@ -59,6 +55,5 @@ class BeginGameSpec extends Specification {
     lazy val player2Name = "player2"
     lazy val player2 = Player2(new NonEmptyString(player2Name))
     lazy val newState = implicitly[StateTransition[EnterPlayerTwoState]].transition(player2Name, state)
-    lazy val expectedState = InPlayState(playField, player1, player2, player1)
   }
 }

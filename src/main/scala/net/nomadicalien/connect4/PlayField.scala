@@ -40,7 +40,22 @@ object PlayField {
   }
 
   def isHorizontalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
-    ??? // TODO: implement
+    val currentColumn = playField(lastPlayedColumn.number)
+    val filledCells = currentColumn.takeWhile {
+      case SelectedCell(_) => true
+      case _ => false
+    }
+    val playedRowIndex = filledCells.length - 1
+    val horizontalCells = (0 until numColumns).map { columnNumber =>
+      playField(columnNumber)(playedRowIndex)
+    }
+    val count: Int = horizontalCells.foldLeft(0) {
+      case (acc, _) if acc == 4 => acc
+      case (acc, SelectedCell(color)) if color == player.color => acc + 1
+      case _ => 0
+    }
+
+    count == 4
   }
 
   def isDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {

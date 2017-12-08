@@ -6,4 +6,6 @@ trait TestData {
   lazy val enterPlayerTwoState = EnterPlayerTwoState(emptyPlayField, player1)
   lazy val player2Name = "player2"
   lazy val player2 = Player2(new NonEmptyString(player2Name))
+  lazy val enterPlayerOneState = EnterPlayerOneState(emptyPlayField)
+  lazy val initialState = GameState.empty
 }

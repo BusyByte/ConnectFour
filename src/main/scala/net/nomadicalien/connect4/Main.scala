@@ -20,5 +20,5 @@ class Main extends App {
 
   }
 
-  gameLoop(GameState.empty)
+  gameLoop(GameState.initial)
 }

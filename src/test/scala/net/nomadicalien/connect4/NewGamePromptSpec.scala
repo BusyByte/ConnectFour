@@ -40,6 +40,6 @@ class NewGamePromptSpec extends Specification {
   }
 
   trait context extends Scope {
-    lazy val gameState = GameState.empty
+    lazy val gameState = GameState.initial
   }
 }

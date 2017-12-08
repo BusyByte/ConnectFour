@@ -35,5 +35,5 @@ case object ExitGameState extends GameState
 
 
 object GameState {
-  lazy val empty = InitialState(PlayField.empty)
+  lazy val initial = InitialState(PlayField.empty)
 }

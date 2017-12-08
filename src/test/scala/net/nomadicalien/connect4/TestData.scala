@@ -8,7 +8,7 @@ trait TestData {
   lazy val player2Name = "player2"
   lazy val player2 = Player2(new NonEmptyString(player2Name))
   lazy val enterPlayerOneState = EnterPlayerOneState(emptyPlayField)
-  lazy val initialState = GameState.empty
+  lazy val initialState = GameState.initial
   lazy val playerOneInControlPlayState = InPlayState(emptyPlayField, player1, player2, player1)
   lazy val playerTwoInControlPlayState = playerOneInControlPlayState.copy(turn = player2)
 }

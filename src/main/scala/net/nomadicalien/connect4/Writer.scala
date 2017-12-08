@@ -37,9 +37,9 @@ object Writer {
       override def write(state: PlayField): String = {
         val columnHeaders = (0 until PlayField.numColumns).mkString("| ", " | ", " |")
 
-        val rows: immutable.Seq[String] = (0 until PlayField.numRows).map { r =>
+        val rows: immutable.Seq[String] = (PlayField.numRows - 1 to(0, -1)).map { r =>
           val rowDisplay: immutable.Seq[String] = (0 until PlayField.numColumns).map { c =>
-            val cell = state(c)(PlayField.numRows - r)
+            val cell = state(c)(r)
             implicitly[Writer[Cell]].write(cell)
           }
           rowDisplay.mkString("| ", " | ", " |")

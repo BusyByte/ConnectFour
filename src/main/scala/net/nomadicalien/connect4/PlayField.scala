@@ -1,7 +1,5 @@
 package net.nomadicalien.connect4
 
-import net.nomadicalien.connect4
-
 
 object PlayField {
   type Columns[A] = Vector[A]
@@ -18,7 +16,6 @@ object PlayField {
     case SelectedCell(_) => true
   }
 
-  //TODO: should be able to pass in non-full column using method above
   def selectCell(playField: PlayField, columnNumber: ColumnNumber, player: Player): PlayField = {
     val currentColumn = playField(columnNumber.number)
     val indexToUpdate: Option[Int] = currentColumn.zipWithIndex.collectFirst {

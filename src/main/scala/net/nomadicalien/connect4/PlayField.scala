@@ -1,5 +1,7 @@
 package net.nomadicalien.connect4
 
+import net.nomadicalien.connect4
+
 
 object PlayField {
   type Columns[A] = Vector[A]
@@ -148,7 +150,14 @@ class ColumnNumber(val number: Int) extends AnyVal
 
 object ColumnNumber {
   def unapply(input: String): Option[ColumnNumber] = input.trim.toCharArray.toList match {
-    case d :: _  if d.isDigit && d.toInt >=0 && d.toInt < PlayField.numColumns => Some(new ColumnNumber(d.toInt))
+    case d :: _ if d.isDigit =>
+      val intValue = d.toString.toInt
+      if(intValue >= 0 && intValue < PlayField.numColumns) {
+        Some(new ColumnNumber(intValue))
+      } else {
+        None
+      }
+
     case _ => None
   }
 }

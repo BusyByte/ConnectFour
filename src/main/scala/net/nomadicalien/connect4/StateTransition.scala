@@ -68,6 +68,22 @@ object StateTransition {
         }
     }
 
+    implicit def exitGameStateTransition = new StateTransition[ExitGameState.type ] {
+      override def transition(input: String, current: ExitGameState.type) = current
+    }
+
+
+    implicit def gameStateTransition = new StateTransition[GameState] {
+      def transition(input: String, current: GameState): GameState = current match {
+        case s: InitialState => implicitly[StateTransition[InitialState]].transition(input, s)
+        case s: EnterPlayerOneState => implicitly[StateTransition[EnterPlayerOneState]].transition(input, s)
+        case s: EnterPlayerTwoState => implicitly[StateTransition[EnterPlayerTwoState]].transition(input, s)
+        case s: InPlayState => implicitly[StateTransition[InPlayState]].transition(input, s)
+        case s: GameOverState => implicitly[StateTransition[GameOverState]].transition(input, s)
+        case s @ ExitGameState => implicitly[StateTransition[ExitGameState.type]].transition(input, s)
+      }
+    }
+
   }
 }
 

@@ -56,7 +56,46 @@ object Writer {
       }
     }
 
+    implicit def enterPlayerOneStateStateWriter = new Writer[EnterPlayerOneState] {
+      override def write(state: EnterPlayerOneState): String = {
+        implicitly[Writer[PlayField]].write(state.playField)
+      }
+    }
 
+    implicit def enterPlayerTwoStateStateWriter = new Writer[EnterPlayerTwoState] {
+      override def write(state: EnterPlayerTwoState): String = {
+        implicitly[Writer[PlayField]].write(state.playField)
+      }
+    }
+
+    implicit def inPlayStateWriter = new Writer[InPlayState] {
+      override def write(state: InPlayState): String = {
+        implicitly[Writer[PlayField]].write(state.playField)
+      }
+    }
+
+    implicit def gameOverStateWriter = new Writer[GameOverState] {
+      override def write(state: GameOverState): String = {
+        implicitly[Writer[PlayField]].write(state.playField)
+      }
+    }
+
+    implicit def exitGameStateWriter = new Writer[ExitGameState.type] {
+      override def write(state: ExitGameState.type): String = {
+        ""
+      }
+    }
+
+    implicit def gameStateWriter = new Writer[GameState] {
+      def write(i: GameState): String = i match {
+        case s: InitialState => implicitly[Writer[InitialState]].write(s)
+        case s: EnterPlayerOneState => implicitly[Writer[EnterPlayerOneState]].write(s)
+        case s: EnterPlayerTwoState => implicitly[Writer[EnterPlayerTwoState]].write(s)
+        case s: InPlayState => implicitly[Writer[InPlayState]].write(s)
+        case s: GameOverState => implicitly[Writer[GameOverState]].write(s)
+        case s @ ExitGameState => implicitly[Writer[ExitGameState.type]].write(s)
+      }
+    }
 
 
   }

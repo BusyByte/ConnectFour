@@ -33,7 +33,7 @@ object Instructor {
 
     implicit def exitGameStateInstructor = new Instructor[ExitGameState.type] {
       def instruct(a: ExitGameState.type): String = {
-        "" // TODO: Could do option so don't need empty strings
+        ""
       }
     }
 

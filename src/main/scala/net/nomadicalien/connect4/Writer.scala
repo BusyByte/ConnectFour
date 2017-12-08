@@ -39,10 +39,10 @@ object Writer {
 
         val rows: immutable.Seq[String] = (0 until PlayField.numRows).map { r =>
           val rowDisplay: immutable.Seq[String] = (0 until PlayField.numColumns).map { c =>
-            val cell = state(c)(r)
+            val cell = state(c)(PlayField.numRows - r)
             implicitly[Writer[Cell]].write(cell)
           }
-          rowDisplay.mkString(s"| ", " | ", " |")
+          rowDisplay.mkString("| ", " | ", " |")
         }
 
 

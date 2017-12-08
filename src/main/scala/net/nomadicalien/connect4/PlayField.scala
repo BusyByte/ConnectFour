@@ -67,7 +67,37 @@ object PlayField {
     * Connected like /
     */
   def isUpHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
-    ??? // TODO: implement
+    val currentColumn = playField(lastPlayedColumn.number)
+    val filledCells = currentColumn.takeWhile {
+      case SelectedCell(_) => true
+      case _ => false
+    }
+    val playedRowIndex = filledCells.length - 1
+    def findLeftBase(columnIndex: Int, rowIndex: Int): (Int, Int) = {
+      if(rowIndex == 0 || columnIndex == 0) {
+        (columnIndex, rowIndex)
+      } else {
+        findLeftBase(columnIndex-1, rowIndex -1)
+      }
+    }
+    val baseLeft = findLeftBase(lastPlayedColumn.number, playedRowIndex)
+    def accumulateDiagonals(columnIndex: Int, rowIndex: Int, acc: List[Cell]): List[Cell] = {
+      if(columnIndex == numColumns || rowIndex == numRows) {
+        acc
+      } else {
+        accumulateDiagonals(columnIndex + 1, rowIndex + 1, playField(columnIndex)(rowIndex) :: acc)
+      }
+    }
+
+    val diagonalCells = accumulateDiagonals(baseLeft._1, baseLeft._2, Nil)
+    val count: Int = diagonalCells.foldLeft(0) {
+      case (acc, _) if acc == 4 => acc
+      case (acc, SelectedCell(color)) if color == player.color => acc + 1
+      case _ => 0
+    }
+
+    count == 4
+
   }
 
   /**
@@ -75,7 +105,35 @@ object PlayField {
     *
     */
   def isDownHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
-    ??? // TODO: implement
+    val currentColumn = playField(lastPlayedColumn.number)
+    val filledCells = currentColumn.takeWhile {
+      case SelectedCell(_) => true
+      case _ => false
+    }
+    val playedRowIndex = filledCells.length - 1
+    def findLeftBase(columnIndex: Int, rowIndex: Int): (Int, Int) = {
+      if (columnIndex == 0 || rowIndex == (numRows-1)) {
+        (columnIndex, rowIndex)
+      } else {
+        (columnIndex-1, rowIndex+1)
+      }
+    }
+    val baseLeft = findLeftBase(lastPlayedColumn.number, playedRowIndex)
+    def accumulateDiagonals(columnIndex: Int, rowIndex: Int, acc: List[Cell]): List[Cell] = {
+      if(columnIndex == numColumns || rowIndex < 0) {
+        acc
+      } else {
+        accumulateDiagonals(columnIndex + 1, rowIndex -1, playField(columnIndex)(rowIndex) :: acc)
+      }
+    }
+    val diagonalCells = accumulateDiagonals(baseLeft._1, baseLeft._2, Nil)
+    val count: Int = diagonalCells.foldLeft(0) {
+      case (acc, _) if acc == 4 => acc
+      case (acc, SelectedCell(color)) if color == player.color => acc + 1
+      case _ => 0
+    }
+
+    count == 4
   }
 
   def isFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {

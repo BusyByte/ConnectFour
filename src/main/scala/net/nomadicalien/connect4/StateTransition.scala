@@ -1,7 +1,7 @@
 package net.nomadicalien.connect4
 
-trait StateTransition[CURRENT] {
-  def transition(input: String, current: CURRENT): GameState
+trait StateTransition[STATE] {
+  def transition(input: String, current: STATE): GameState
 }
 
 object StateTransition {

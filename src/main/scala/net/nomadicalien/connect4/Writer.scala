@@ -4,8 +4,8 @@ import net.nomadicalien.connect4.PlayField.PlayField
 
 import scala.collection.immutable
 
-trait Writer[ITEM] {
-  def write(i: ITEM): String
+trait Writer[A] {
+  def write(a: A): String
 }
 
 object Writer {

@@ -28,7 +28,11 @@ object Instructor {
 
     implicit def gameOverStateInstructor = new Instructor[GameOverState] {
       override def instruct(state: GameOverState): String =
-        Instructions.gameOverMessage + lineSeparator + s"Player ${state.winner.number} has won"
+        List(
+          Instructions.gameOverMessage,
+          s"${state.winner.name.value} has won",
+          Instructions.playNewGame
+        ).mkString(lineSeparator)
     }
 
     implicit def exitGameStateInstructor = new Instructor[ExitGameState.type] {

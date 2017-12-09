@@ -70,7 +70,12 @@ object Writer {
 
     implicit def inPlayStateWriter = new Writer[InPlayState] {
       override def write(state: InPlayState): String = {
-        implicitly[Writer[PlayField]].write(state.playField)
+        val playField = implicitly[Writer[PlayField]].write(state.playField)
+        val turn = s"${state.turn.name.value}'s turn (${state.turn.color})"
+        List(
+          playField,
+          turn
+        ).mkString(lineSeparator)
       }
     }
 

@@ -36,7 +36,7 @@ class DiagonalWinSpec extends Specification {
       newState must beLike {
         case g @ GameOverState(_, _, _, winner) if winner.number == 1 =>
           val prompt = gameOverInstructor.instruct(g).split(lineSeparator).toList
-          prompt must_== List(Instructions.gameOverMessage, "Player 1 has won")
+          prompt must_== List(Instructions.gameOverMessage, "player1 has won", Instructions.playNewGame)
       }
     }
   }
@@ -58,7 +58,7 @@ class DiagonalWinSpec extends Specification {
       newState must beLike {
         case g @ GameOverState(_, _, _, winner) if winner.number == 2 =>
           val prompt = gameOverInstructor.instruct(g).split(lineSeparator).toList
-          prompt must_== List(Instructions.gameOverMessage, "Player 2 has won")
+          prompt must_== List(Instructions.gameOverMessage, "player2 has won", Instructions.playNewGame)
       }
 
     }

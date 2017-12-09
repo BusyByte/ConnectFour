@@ -1,9 +1,10 @@
 package net.nomadicalien.connect4
 
-class Main extends App {
+object Main extends App {
 
   def gameLoop(gameState: GameState): Unit = {
     import Writer.Implicits._
+    println()
     println(implicitly[Writer[GameState]].write(gameState))
 
     import Instructor.Implicits._

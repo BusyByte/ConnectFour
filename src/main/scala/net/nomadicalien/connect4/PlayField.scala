@@ -1,18 +1,17 @@
 package net.nomadicalien.connect4
 
-
 object PlayField {
   type Columns[A] = Vector[A]
-  type Rows[A] = Vector[A]
-  type PlayField = Columns[Rows[Cell]]
+  type Rows[A]    = Vector[A]
+  type PlayField  = Columns[Rows[Cell]]
 
-  lazy val numColumns =  7
-  lazy val numRows = 6
+  lazy val numColumns = 7
+  lazy val numRows    = 6
 
-  lazy val empty:PlayField = Vector.fill(numColumns, numRows)(EmptyCell)
+  lazy val empty: PlayField = Vector.fill(numColumns, numRows)(EmptyCell)
 
   def isColumnFull(playField: PlayField, column: ColumnNumber): Boolean = playField(column.number).forall {
-    case EmptyCell => false
+    case EmptyCell       => false
     case SelectedCell(_) => true
   }
 
@@ -26,15 +25,18 @@ object PlayField {
     }
   }
 
-
   def isVerticalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
-    val playersColumnSelected = playField(lastPlayedColumn.number).filterNot {
-      case EmptyCell => true
-      case _ => false
-    }.reverse.takeWhile {
-      case SelectedCell(color) if color == player.color  => true
-      case _ => false
-    }.take(4)
+    val playersColumnSelected = playField(lastPlayedColumn.number)
+      .filterNot {
+        case EmptyCell => true
+        case _         => false
+      }
+      .reverse
+      .takeWhile {
+        case SelectedCell(color) if color == player.color => true
+        case _                                            => false
+      }
+      .take(4)
     playersColumnSelected.length == 4
   }
 
@@ -42,16 +44,16 @@ object PlayField {
     val currentColumn = playField(lastPlayedColumn.number)
     val filledCells = currentColumn.takeWhile {
       case SelectedCell(_) => true
-      case _ => false
+      case _               => false
     }
     val playedRowIndex = filledCells.length - 1
     val horizontalCells = (0 until numColumns).map { columnNumber =>
       playField(columnNumber)(playedRowIndex)
     }
     val count: Int = horizontalCells.foldLeft(0) {
-      case (acc, _) if acc == 4 => acc
+      case (acc, _) if acc == 4                                => acc
       case (acc, SelectedCell(color)) if color == player.color => acc + 1
-      case _ => 0
+      case _                                                   => 0
     }
 
     count == 4
@@ -63,25 +65,25 @@ object PlayField {
   }
 
   /**
-    * Connected like /
-    */
+   * Connected like /
+   */
   def isUpHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     val currentColumn = playField(lastPlayedColumn.number)
     val filledCells = currentColumn.takeWhile {
       case SelectedCell(_) => true
-      case _ => false
+      case _               => false
     }
     val playedRowIndex = filledCells.length - 1
     def findLeftBase(columnIndex: Int, rowIndex: Int): (Int, Int) = {
-      if(rowIndex == 0 || columnIndex == 0) {
+      if (rowIndex == 0 || columnIndex == 0) {
         (columnIndex, rowIndex)
       } else {
-        findLeftBase(columnIndex-1, rowIndex -1)
+        findLeftBase(columnIndex - 1, rowIndex - 1)
       }
     }
     val baseLeft = findLeftBase(lastPlayedColumn.number, playedRowIndex)
     def accumulateDiagonals(columnIndex: Int, rowIndex: Int, acc: List[Cell]): List[Cell] = {
-      if(columnIndex == numColumns || rowIndex == numRows) {
+      if (columnIndex == numColumns || rowIndex == numRows) {
         acc
       } else {
         accumulateDiagonals(columnIndex + 1, rowIndex + 1, playField(columnIndex)(rowIndex) :: acc)
@@ -90,9 +92,9 @@ object PlayField {
 
     val diagonalCells = accumulateDiagonals(baseLeft._1, baseLeft._2, Nil)
     val count: Int = diagonalCells.foldLeft(0) {
-      case (acc, _) if acc == 4 => acc
+      case (acc, _) if acc == 4                                => acc
       case (acc, SelectedCell(color)) if color == player.color => acc + 1
-      case _ => 0
+      case _                                                   => 0
     }
 
     count == 4
@@ -100,36 +102,36 @@ object PlayField {
   }
 
   /**
-    * Connected like \
-    *
-    */
+   * Connected like \
+   *
+   */
   def isDownHillDiagonalFourConnected(playField: PlayField, lastPlayedColumn: ColumnNumber, player: Player): Boolean = {
     val currentColumn = playField(lastPlayedColumn.number)
     val filledCells = currentColumn.takeWhile {
       case SelectedCell(_) => true
-      case _ => false
+      case _               => false
     }
     val playedRowIndex = filledCells.length - 1
     def findLeftBase(columnIndex: Int, rowIndex: Int): (Int, Int) = {
-      if (columnIndex == 0 || rowIndex == (numRows-1)) {
+      if (columnIndex == 0 || rowIndex == (numRows - 1)) {
         (columnIndex, rowIndex)
       } else {
-        (columnIndex-1, rowIndex+1)
+        (columnIndex - 1, rowIndex + 1)
       }
     }
     val baseLeft = findLeftBase(lastPlayedColumn.number, playedRowIndex)
     def accumulateDiagonals(columnIndex: Int, rowIndex: Int, acc: List[Cell]): List[Cell] = {
-      if(columnIndex == numColumns || rowIndex < 0) {
+      if (columnIndex == numColumns || rowIndex < 0) {
         acc
       } else {
-        accumulateDiagonals(columnIndex + 1, rowIndex -1, playField(columnIndex)(rowIndex) :: acc)
+        accumulateDiagonals(columnIndex + 1, rowIndex - 1, playField(columnIndex)(rowIndex) :: acc)
       }
     }
     val diagonalCells = accumulateDiagonals(baseLeft._1, baseLeft._2, Nil)
     val count: Int = diagonalCells.foldLeft(0) {
-      case (acc, _) if acc == 4 => acc
+      case (acc, _) if acc == 4                                => acc
       case (acc, SelectedCell(color)) if color == player.color => acc + 1
-      case _ => 0
+      case _                                                   => 0
     }
 
     count == 4
@@ -149,7 +151,7 @@ object ColumnNumber {
   def unapply(input: String): Option[ColumnNumber] = input.trim.toCharArray.toList match {
     case d :: _ if d.isDigit =>
       val intValue = d.toString.toInt
-      if(intValue >= 0 && intValue < PlayField.numColumns) {
+      if (intValue >= 0 && intValue < PlayField.numColumns) {
         Some(new ColumnNumber(intValue))
       } else {
         None
@@ -158,6 +160,3 @@ object ColumnNumber {
     case _ => None
   }
 }
-
-
-

@@ -1,8 +1,10 @@
 package net.nomadicalien.connect4
 
+import scala.annotation.tailrec
+
 object Main extends App {
 
-  def gameLoop(gameState: GameState): Unit = {
+  @tailrec def gameLoop(gameState: GameState): Unit = {
     import Writer.Implicits._
     println()
     println(implicitly[Writer[GameState]].write(gameState))

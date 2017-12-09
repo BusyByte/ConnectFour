@@ -18,6 +18,7 @@
   - Implicit proof required in order to compile
 - Use of types in place of primitives to prevent mistakes
   - Value Classes erase to primitives at runtime
+- Everything is values and only real side effects is printing in Main  
 - Game loop is tail recursive
   - Functional looping rather than while or for statement  
 - No libraries

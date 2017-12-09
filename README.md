@@ -6,7 +6,10 @@
 - Install SBT
 - Clone this GitHub repo
 - Open a shell (command prompt) and navigate to project directory
-- run `sbt run`
+- execute the following command: 
+```bash
+sbt run
+```
 - Have fun!
 
 ## About

@@ -3,7 +3,7 @@
 
 ## Running
 - Install Java 8 JDK
-- Install SBT
+- Install [SBT](https://www.scala-sbt.org)
 - Clone this GitHub repo
 - Open a shell (command prompt) and navigate to project directory
 - execute the following command: 
@@ -36,7 +36,7 @@ sbt run
 ## Further thoughts
 - Set up compiler settings so if basic warnings and bad practices used then will just not compile
   - [tpolecat compiler settings](https://tpolecat.github.io/2017/04/25/scalac-flags.html)
-- Set up [Wart Remover](http://www.wartremover.org/) (compiler linter) to catch other bad practices and prevent compilation if violated
+- Set up [Wart Remover](http://www.wartremover.org) (compiler linter) to catch other bad practices and prevent compilation if violated
 - Could look at using [state monad](http://eed3si9n.com/learning-scalaz/State.html#State+and+StateT) or [indexed state](https://youtu.be/eO1JLs5FR6k) monad possibly for state transitions
 - Bad input goes back to original state with no really notifications
   - Could use [Validation](http://eed3si9n.com/learning-scalaz/Validation.html) from ScalaZ or Cats

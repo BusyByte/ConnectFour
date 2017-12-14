@@ -47,4 +47,6 @@ which provide errors or validations if the type can not be realized
 - Eliminate some of the boilerplate of pattern matching on sealed trait co-product with [shapeless type class derivation](https://github.com/milessabin/shapeless/blob/master/examples/src/main/scala/shapeless/examples/derivation.scala#L108)
 - Updating nested immutable collections is a bit painful
   - Use [Lens](http://eed3si9n.com/learning-scalaz/Lens.html) to update easier
+- Still a little bit of primitive obsession with newlines and empty strings.
+  - Should make this a list of case classes and add the newlines in Main
 

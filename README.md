@@ -27,9 +27,9 @@ sbt run
 - No libraries
   - I've created my own limited versions of some things 
   which exist in [ScalaZ](https://github.com/scalaz/scalaz) or [Cats](https://typelevel.org/cats) libraries for simplicity
-- Use specs2 for testing
+- Use [specs2](https://etorreborre.github.io/specs2) for testing
   - Tests run in parallel by default
-  - Have a Given When Then syntax but chose not to do that to save time  
+  - Have a [Given When Then](https://etorreborre.github.io/specs2/guide/SPECS2-4.0.0/org.specs2.guide.GivenWhenThenStyle.html) syntax but chose not to do that to save time  
 - Formatted source with [scalafmt](http://scalameta.org/scalafmt)
   - Can setup to auto-format on compile but didn't want to introduce plugin for simplicity    
 

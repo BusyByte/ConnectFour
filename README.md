@@ -37,7 +37,7 @@ sbt run
 - Set up compiler settings so if basic warnings and bad practices used then will just not compile
   - [tpolecat compiler settings](https://tpolecat.github.io/2017/04/25/scalac-flags.html)
 - Set up [compiler linter](http://www.wartremover.org/) to catch other bad practices and prevent compilation if violated
-- Could look at using state monad or indexed state monad possibly for state transitions
+- Could look at using [state monad](http://eed3si9n.com/learning-scalaz/State.html#State+and+StateT) or [indexed state](https://youtu.be/eO1JLs5FR6k) monad possibly for state transitions
 - Bad input goes back to original state with no really notifications
   - Could use [Validation](http://eed3si9n.com/learning-scalaz/Validation.html) from ScalaZ or Cats
 - Could introduce packages and scope type creation to go through smart constructors 
